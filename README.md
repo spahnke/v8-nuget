@@ -1,8 +1,60 @@
 # NuGet package for V8 JavaScript Engine
 
+## Building with the script in this repository
+
 ```powershell
-python3 .\build.py --platform=x64 --config=Release --libs=shared
+python3 .\build.py --platform=x64 --libs=shared --use-clang --version=11.3
 ```
+
+## Building V8 manually
+
+- Get and init depot tools [^1]
+- Install VS and the Windows SDK including the debug tools [^2]
+- Set the `DEPOT_TOOLS_WIN_TOOLCHAIN=0` environment variable [^2]
+- Fetch the V8 source code [^3]
+  
+  ```sh
+  fetch --no-history v8
+  cd v8
+  ```
+
+- Navigate into the `v8` directory and build according to [^2] [^4] and [^5]
+
+  ```sh
+  gclient sync
+  python3 tools/dev/v8gen.py x64.release # generate build files
+  gn args out.gn\x64.release # open args file in editor or supply parameters directly (next line doesn't work yet...):
+  # gn gen out.gn\x64.release --args='treat_warnings_as_errors=false fatal_linker_warnings=false v8_enable_fast_torque=false v8_enable_verify_heap=false v8_use_external_startup_data=false use_custom_libcxx=false is_debug=false enable_iterator_debugging=false target_cpu="x64" is_clang=true is_component_build=true v8_monolithic=false'
+  ninja -C out.gn\x64.release # compile
+  ```
+
+  With the following parameters [^6]
+
+  ```ini
+  treat_warnings_as_errors = false
+  fatal_linker_warnings = false
+  v8_enable_fast_torque = false
+  v8_enable_verify_heap = false
+  v8_use_external_startup_data = false
+  use_custom_libcxx = false
+  is_debug = false
+  enable_iterator_debugging = false
+  target_cpu = "x64"
+  is_clang = true
+  is_component_build = true
+  v8_monolithic = false
+  ```
+
+- asdf
+
+[^1]: <https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_setting_up>
+[^2]: <https://medium.com/angular-in-depth/how-to-build-v8-on-windows-and-not-go-mad-6347c69aacd4>
+[^3]: <https://v8.dev/docs/source-code>
+[^4]: <https://v8.dev/docs/build>
+[^5]: <https://v8.dev/docs/build-gn#manual>
+[^6]: <https://www.chromium.org/developers/gn-build-configuration/>
+
+##  Information
 
 This packages contain prebuilt V8 binaries, debug symbols, headers and
 libraries required to embed the V8 JavaScript engine into a C++ project.

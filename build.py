@@ -14,19 +14,9 @@ BIN_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin')
 GN_OPTIONS = {
 	'treat_warnings_as_errors' : False,
 	'fatal_linker_warnings' : False,
-	'use_jumbo_build' : True, # removed in V8 version 8.1
-	#'symbol_level' : 1,
-	'v8_enable_fast_mksnapshot' : False,
 	'v8_enable_fast_torque' : False,
 	'v8_enable_verify_heap' : False, # to fix VC++ Linker error in Debug configuratons
-	#'v8_optimized_debug' : False,
-	#'v8_use_snapshot' : True,
 	'v8_use_external_startup_data' : False,
-	#'v8_enable_handle_zapping' : True,
-	#'v8_check_header_includes' : True,
-	#'v8_win64_unwinding_info' : False,
-	#'dcheck_always_on' : True,
-	#'is_clang': USE_CLANG,
 	'use_custom_libcxx' : False,
 }
 
@@ -281,7 +271,7 @@ for arch in args.PLATFORMS:
 			### Generate build.ninja files in out.gn/V8_VERSION/toolset/arch/conf/lib directory
 			out_dir = os.path.join('out.gn', args.V8_VERSION, toolset, arch, conf, lib)
 			options = args.GN_OPTIONS
-			options['is_debug'] = options['is_full_debug'] = options['enable_iterator_debugging'] = (conf == 'Debug')
+			options['is_debug'] = options['enable_iterator_debugging'] = (conf == 'Debug')
 			options['target_cpu'] = arch
 			options['is_clang'] = args.USE_CLANG
 			options['is_component_build'] = not build_monolith
