@@ -1,5 +1,9 @@
 # NuGet package for V8 JavaScript Engine
 
+```powershell
+python3 .\build.py --platform=x64 --config=Release --libs=shared
+```
+
 This packages contain prebuilt V8 binaries, debug symbols, headers and
 libraries required to embed the V8 JavaScript engine into a C++ project.
 
