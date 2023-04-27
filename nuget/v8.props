@@ -7,7 +7,7 @@
     <Link>
       <AdditionalLibraryDirectories>$(MSBuildThisFileDirectory)..\..\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>v8.dll.lib;v8_libbase.dll.lib;v8_libplatform.dll.lib;dbghelp.lib;shlwapi.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalDependencies Condition="Exists('zlib.dll.lib')">zlib.dll.lib</AdditionalDependencies>
+      <AdditionalDependencies Condition="Exists('third_party_zlib.dll.lib')">third_party_zlib.dll.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
 </Project>
