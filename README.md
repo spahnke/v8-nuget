@@ -2,14 +2,17 @@
 
 ## Building with the script in this repository
 
+Follow the first two steps to install depot tools, VS 2022, and the Windows SDK under [Building V8 manually](#building-v8-manually). As of this writing V8
+requires the Windows SDK 10.0.22621.0 with debugging tools to build. Then run the following command to build the nuget packages locally.
+
 ```powershell
 python3 .\build.py --platform=x64 --libs=shared --use-clang --version=11.3
 ```
 
 ## Building V8 manually
 
-- Get and init depot tools [^1]
-- Install VS and the Windows SDK including the debug tools [^2]
+- Get and init depot tools and add them to your PATH [^1]
+- Install VS 2022 with C++ tools (143) and the Windows SDK including the debug tools (this must be installed standalone not through the VS installer) [^2]
 - Set the `DEPOT_TOOLS_WIN_TOOLCHAIN=0` environment variable [^2]
 - Fetch the V8 source code [^3]
   
@@ -24,7 +27,7 @@ python3 .\build.py --platform=x64 --libs=shared --use-clang --version=11.3
   gclient sync
   python3 tools/dev/v8gen.py x64.release # generate build files
   gn args out.gn\x64.release # open args file in editor or supply parameters directly (next line doesn't work yet...):
-  # gn gen out.gn\x64.release --args='treat_warnings_as_errors=false fatal_linker_warnings=false v8_enable_fast_torque=false v8_enable_verify_heap=false v8_use_external_startup_data=false use_custom_libcxx=false is_debug=false enable_iterator_debugging=false target_cpu="x64" is_clang=true is_component_build=true v8_monolithic=false'
+  # gn gen out.gn\x64.release --args='treat_warnings_as_errors=false fatal_linker_warnings=false v8_enable_fast_torque=false v8_enable_verify_heap=false v8_use_external_startup_data=false v8_enable_sandbox=false use_custom_libcxx=false is_debug=false enable_iterator_debugging=false target_cpu="x64" is_clang=true is_component_build=true v8_monolithic=false'
   ninja -C out.gn\x64.release # compile
   ```
 
@@ -36,6 +39,7 @@ python3 .\build.py --platform=x64 --libs=shared --use-clang --version=11.3
   v8_enable_fast_torque = false
   v8_enable_verify_heap = false
   v8_use_external_startup_data = false
+  v8_enable_sandbox = false
   use_custom_libcxx = false
   is_debug = false
   enable_iterator_debugging = false
@@ -44,8 +48,6 @@ python3 .\build.py --platform=x64 --libs=shared --use-clang --version=11.3
   is_component_build = true
   v8_monolithic = false
   ```
-
-- asdf
 
 [^1]: <https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_setting_up>
 [^2]: <https://medium.com/angular-in-depth/how-to-build-v8-on-windows-and-not-go-mad-6347c69aacd4>
