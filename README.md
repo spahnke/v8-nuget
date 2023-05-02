@@ -12,7 +12,7 @@ python3 .\build.py --platform=x64 --libs=shared --use-clang --version=11.3
 ## Building V8 manually
 
 - Get and init depot tools and add them to your PATH [^1]
-- Install VS 2022 with C++ tools (143) and the Windows SDK including the debug tools (this must be installed standalone not through the VS installer) [^2]
+- Install VS 2022 with C++ tools (143) and the Windows SDK (10.0.22621.0) including the debug tools (this must be installed standalone not through the VS installer) [^2]
 - Set the `DEPOT_TOOLS_WIN_TOOLCHAIN=0` environment variable [^2]
 - Fetch the V8 source code [^3]
   
