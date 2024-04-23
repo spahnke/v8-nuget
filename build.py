@@ -15,6 +15,14 @@ import zipfile
 
 BIN_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin')
 GN_OPTIONS = {
+	# 'use_custom_libcxx' : False,
+	# 'use_custom_libcxx_for_host' : False,
+	# 'fatal_linker_warnings': False,
+	# 'use_thin_lto' : False,
+	# 'v8_embedder_string' : "-Foo",
+	# 'v8_enable_pointer_compression' : False,
+	# 'v8_enable_31bit_smis_on_64bit_arch' : False,
+	# 'v8_static_library' : True,
 	'v8_use_external_startup_data' : False,
 }
 
@@ -69,7 +77,7 @@ args = arg_parser.parse_args()
 
 # Use only Last Known Good Revision branches
 if args.V8_VERSION.count('.') < 2 and all(x.isdigit() for x in args.V8_VERSION.split('.')):
-	args.V8_VERSION += '-lkgr' 
+	args.V8_VERSION += '-lkgr'
 
 
 print('Parsed args: ', args)
@@ -170,6 +178,7 @@ for arch in args.PLATFORMS:
 			options = args.GN_OPTIONS
 			options['is_debug'] = (conf == 'Debug')
 			options['target_cpu'] = arch
+			# options['v8_target_cpu'] = arch
 			options['is_component_build'] = not build_monolith
 			options['v8_monolithic'] = build_monolith
 			target = 'v8'
